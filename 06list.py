@@ -88,3 +88,65 @@ print(sjs)
 print(sjs[0])
 print(sjs[1])
 print(sjs[2])
+
+# 참석자 명단 선언
+attendList = ['이순철', '김병헌', '김민우', '박찬호', '김민태']
+
+# 참석자 수 확인 : len
+len(attendList)
+
+# 문자열에 len함수 적용시 문자열의 길이 출력
+str = 'Hello, World!!'
+print(len(str))
+
+# 사용자로부터 이름 입력받기 : input
+name = input('이름을 입력하세요 : ')
+
+# 사용자에게 정수 2개 입력 받아 더한 후 출력
+# input으로 입력받은 내용은 무조건 문자로 처리
+# 만약, 숫자를 입력받길 원한다면, 적절한 변환 필요!
+
+num1 = int(input('첫번째 정수는? : '))
+num2 = int(input('두번째 정수는? : '))
+
+print(num1, num2, num1 + num2)
+
+# p1
+
+userName = ''
+userAge = ''
+userName = input('이름을 입력하세요. ')
+print('사용자 이름')
+print(userName)
+userAge = input('나이를 입력하세요. ')
+print('사용자 나이')
+print(userAge)
+
+# 날씨 예보
+
+date = input('날짜는? ')
+day = input('요일은? ')
+mtemp = input('아침 기온은? ')
+ntemp = input('낮 기온은? ')
+rainprop = input('비올 확률은? ')
+air = input('미세먼지 수치는? ')
+rsun = input('일출 시간은? ')
+dsun = input('일몰 시간은? ')
+swave = input('남해 앞바다 물결은? ')
+ewave = input('동해 앞바다 물결은? ')
+wwave = input('서해 앞바다 물결은? ')
+
+weather = f'''내일 날씨 예보입니다.
+{day}요일인 {date}의 아침 최저 기온은 {mtemp}도, 낮 최고 기온은 {ntemp}로 예보됐습니다.
+비올 확률은 {rainprop}%이고, 미세먼지는 {air} 수준일 것으로 예상됩니다.
+일출 시간은 {rsun}이고, 일몰 시간은 {dsun} 입니다.
+바다의 물결은 남해 앞바다 {swave}m, 동해 앞바다 {ewave}m, 서해 앞바다 {wwave}m 높이로 일겠습니다.
+지금까지 {date} {day}요일 날씨 예보였습니다.
+'''
+
+print(weather)
+
+
+# 입력한 글자 수 확인 프로그램
+seta = input('메시지를 입력하세요. ')
+print(f'입력하신 메세지의 길이 : {len(seta)}')
