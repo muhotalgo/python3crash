@@ -130,3 +130,110 @@ for i in range(len(menus)):
 for menu in menus:
     print(menu)
 
+# pass 키워드
+# 반복문 사용시 코드만 작성해 놓고
+# 실행문은 나중에 추가하고 싶을 경우
+# pass 라는 키워드를 사용
+
+for i in range(1, 100):
+    pass # 반복할 내용은 나중에 작성
+
+# 반복 수행시 이터러블 객체가 필요없는 경우
+# 변수명 대신 _를 사용하기도 함
+for _ in range(10):
+    print('Hello, World!!')
+
+# 중첩반복문
+# 두 개이상의 반복문을 이용해서 반복실행을 할수도 있음
+# 보통 2개의 반복문을 중첩해서 사용하는 경우가 많음
+# 이 경우 바깥쪽 반복문은 행을,
+# 안쪽 반복문은 열을 반복하는데 사용함
+# 총 반복횟수는 (바깥쪽 반복문 횟수) * (안쪽 반복문 횟수)임
+
+# *
+# **
+# ***
+# ****
+# ***** 모양 출력하기
+
+for i in range(1, 5+1):         # 행 (작은바늘)
+    for j in range(i):          # 열 (큰바늘)
+        print('*', end='')
+    print()                     # 줄바꿈(새로운 행 만듦)
+
+# 2단부터 9단까지의 구구단을 출력하는
+# 반복문을 작성하세요
+
+
+for i in range(2, 6+1, 4):
+    for g in range(4):
+        tdan = i + g
+        stdan = str(tdan) + '단'
+        print(f'{stdan:^10s}', end='***')
+    print()
+    for j in range(1, 9+1):
+        for k in range(4):
+            dan = i + k
+            print(f'{dan} x {j} = {dan * j:2d}', end='    ')
+        print()
+    print()
+
+for i in range(1, 9+1):
+    for j in range(2, 5+1):
+        print(f'{j} x {i} = {i * j:2d}', end='   ')
+    print()
+for i in range(1, 9+1):
+    for j in range(6, 9+1):
+        print(f'{j} x {i} = {i * j:2d}', end='   ')
+    print()
+
+# employees.csv를 이용해서 사원정보를 입력하면
+# list에 각각 저장하는 코드를 작성하세요
+# 사번empno, 이름fname, 성lname, 이메일email,
+# 입사일hdate, 직책jobid, 급여sal, 부서번호deptid
+
+# 선언
+
+empnos = []
+fnames = []
+lnames = []
+emails = []
+hdates = []
+jobids = []
+sals = []
+deptids = []
+
+# 삽입
+
+empno = input('사번은?')
+fname = input('이름은?')
+lname = input('성은?')
+email = input('이메일은?')
+hdate = input('입사일은?')
+jobid = input('직책은?')
+sal = input('급여는?')
+deptid = input('부서번호는?')
+
+empnos.append(empno)
+fnames.append(fname)
+lnames.append(lname)
+emails.append(email)
+hdates.append(hdate)
+jobids.append(jobid)
+sals.append(sal)
+deptids.append(deptid)
+
+for i in range(len(empnos)):
+    print(f'{empnos{i}}  {fnames{i}}  {lnames{i}}  {emails{i}}  '
+          f'{hdates{i}}  {jobids{i}}  {sals{i}}  {deptids{i}}')
+
+
+# 출력
+
+
+# 51. 아래의 그림처럼 결과를 출력하는 프로그램을 작성하여라. (BigGugudan)
+
+for i in range(1):
+    for j in range(1, 9+1):
+        print(j, end='   ')
+
