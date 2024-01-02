@@ -45,10 +45,10 @@ def compute_sungjuk(sj):   # 성적 처리
 
 
 def save_sungjuk(sj):
-    # with open('sungjuks.csv', 'a', encoding='utf-8') as f:
-    #     row = (f"{sj['name']},{sj['kor']},{sj['eng']},{sj['mat']},"
-    #            f"{sj['tot']},{sj['avg']:.1f},{sj['grd']}\n")
-    #     f.write(row)
+    with open('sungjuks.csv', 'a', encoding='utf-8') as f:
+        row = (f"{sj['name']},{sj['kor']},{sj['eng']},{sj['mat']},"
+               f"{sj['tot']},{sj['avg']:.1f},{sj['grd']}\n")
+        f.write(row)
     sjs.append(sj)  # 메모리에 존재하는 sjs변수에도 파일에 추가된 성적데이터 반영
 
 
