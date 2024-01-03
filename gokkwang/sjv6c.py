@@ -79,7 +79,16 @@ def load_sungjuk():
 
 
 def showone_sungjuk():
-    print('성적 데이터 상세조회')
+    name = input('상세 조회할 학생이름은?')
+
+    info = '찾는 데이터가 없어요'
+    for sj in sjs['response']['body']['items']:
+        if sj['name'] == name:
+            info = (f"이름: {sj['name']}, 국어: {sj['kor']}, 수학: {sj['mat']}, 영어: {sj['eng']}, "
+                    f"합계: {sj['tot']}, 평균: {sj['avg']}, 학점: {sj['grd']}")
+            break   # 찾고나면 작업 중단
+
+    print(info)
 
 
 def modify_sungjuk():
