@@ -55,11 +55,10 @@ def show_sungjuk():  # 성적 데이터 출력
 
 
 def save_sungjuk(sj):
-    global sjs
-
     # 메모리 내에 생성된 json 객체에 방금 생성한 성적데이터 저장
     items.append(sj)
     sjs['response']['body']['totalCount'] += 1
+
     # 메모리 내에 생성된 json 객체의 모든 내용을 파일에 새롭게 저장
     with open('sungjuks.json', 'w', encoding='UTF-8') as f:
         json.dump(sjs, f, ensure_ascii=False)
@@ -81,6 +80,8 @@ def load_sungjuk():
     try:  # 만일 작업중에 오류가 발생하면
         with open('sungjuks.json', encoding='UTF-8') as f:
             sjs = json.load(f)
+            items = sjs['response']['body']['items']
+            totalCount = sjs['response']['body']['totalCount']
     except:
         items = sjs['response']['body']['items']
         totalCount = sjs['response']['body']['totalCount']
@@ -99,8 +100,48 @@ def showone_sungjuk():
     print(info)
 
 
+def read_again(data, name):
+    kor = int(input(f'새로운 국어는? ({data["kor"]}) : '))
+    eng = int(input(f'새로운 영어는? ({data["eng"]}) : '))
+    mat = int(input(f'새로운 수학은? ({data["mat"]}) : '))
+
+    data = OrderedDict()
+    data['name'] = name
+    data['kor'] = kor
+    data['eng'] = eng
+    data['mat'] = mat
+
+    return data
+
+
+def flush_sungjuk():
+    with open('sungjuks.json', 'w', encoding='UTF-8') as f:
+        json.dump(sjs, f, ensure_ascii=False)
+
+
 def modify_sungjuk():
-    print('성적 데이터 수정')
+    name = input('수정할 학생 이름은?')
+    # 수정할 학생 데이터를 이름으로 찾음
+    data = None
+    idx = None
+    for i, sj in enumerate(items):
+        if sj['name'] == name:
+            data = sj
+            idx = i
+
+    # 수정할 학생 데이터를 찾았다면
+    # 새로운 값을 입력받고, 다시 성적 처리함
+    if data:
+        data = read_again(data, name)
+        compute_sungjuk(data)
+
+        # 리스트에 기존 데이터를 버리고 새로운 데이터로 재설정
+        items[idx] = data
+
+        # 변경사항을 json 파일에 반영
+        flush_sungjuk()
+    else:
+        print('찾는 데이터가 없습니다!')
 
 
 def remove_sungjuk():
