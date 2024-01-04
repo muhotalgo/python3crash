@@ -7,8 +7,12 @@ items = []
 totalCount = 0
 
 
-# 함수 정의
+# 메뉴 출력
 def show_menu():  # 메뉴 출력
+    """
+    메뉴 출력하고 메뉴항목을 입력받음
+    :return: 입력받은 메뉴번호
+    """
     main_menu = '''
 --------------------
 성적처리 프로그램 v6c
@@ -26,7 +30,12 @@ def show_menu():  # 메뉴 출력
     return menu
 
 
+# 성적 데이터 입력 받음
 def read_sungjuk():  # 성적 데이터 입력받음
+    """
+    성적 데이터를 입력 받는 함수
+    :return: 이름과 성적 데이터
+    """
     sungjuk = input('이름과 성적을 입력하세요 (예: 홍길동 99 88 99) : ')
     data = sungjuk.split()  # 빈칸으로 문자열 분리
 
@@ -38,7 +47,13 @@ def read_sungjuk():  # 성적 데이터 입력받음
     return sj
 
 
-def compute_sungjuk(sj):  # 성적 처리
+# 성적 처리 (총점/평균/학점 계산)
+def compute_sungjuk(sj):
+    """
+    성적 처리 (총점/평균/학점 계산) 하는 함수
+    :param sj: 삽입할 성적 데이터
+    :return: 없음
+    """
     sj['tot'] = sj['kor'] + sj['eng'] + sj['mat']
     sj['avg'] = float(f"{sj['tot'] / 3:.1f}")
     sj['grd'] = '수' if sj['avg'] >= 90 else \
@@ -47,14 +62,25 @@ def compute_sungjuk(sj):  # 성적 처리
                 '양' if sj['avg'] >= 60 else '가'
 
 
-def show_sungjuk():  # 성적 데이터 출력
+# 모든 성적 데이터 출력 (이름/국어/영어/수학)
+def show_sungjuk():
+    """
+    성적 데이터를 조회하는 함수
+    :return: 없음
+    """
     print('성적데이터 조회')
     for sj in items:
         print(f"이름: {sj['name']:s}, 국어: {sj['kor']}, "
               f"영어: {sj['eng']}, 수학: {sj['mat']}")
 
 
+# 성적 데이터 저장 (sungjuks.json 파일)
 def save_sungjuk(sj):
+    """
+    성적 데이터를 저장하는 함수 (sungjuks.json)
+    :param sj: 성적 데이터
+    :return: 없음
+    """
     # 메모리 내에 생성된 json 객체에 방금 생성한 성적데이터 저장
     items.append(sj)
     sjs['response']['body']['totalCount'] += 1
@@ -64,7 +90,12 @@ def save_sungjuk(sj):
         json.dump(sjs, f, ensure_ascii=False)
 
 
+# 성적 데이터 추가 (입력-처리-저장)
 def addsungjuk():
+    """
+    성적데이터를 추가하는 함수
+    :return:없음
+    """
     print('성적 데이터 추가')
     sj = read_sungjuk()
     compute_sungjuk(sj)
@@ -73,6 +104,10 @@ def addsungjuk():
 
 # 프로그램 시작시 sungjuks.json 파일을 읽어 sjs 변수에 초기화
 def load_sungjuk():
+    """
+    프로그램 시작시 sungjuks.json 파일을 읽어 sjs 변수에 초기화하는 함수
+    :return: 없음
+    """
     global sjs
     global items
     global totalCount
@@ -87,7 +122,12 @@ def load_sungjuk():
         totalCount = sjs['response']['body']['totalCount']
 
 
+# 성적 데이터 상세 조회
 def showone_sungjuk():
+    """
+    성적 데이터 상세 조회하는 함수
+    :return: 없음
+    """
     name = input('상세 조회할 학생이름은?')
 
     info = '찾는 데이터가 없어요!!'
@@ -100,7 +140,14 @@ def showone_sungjuk():
     print(info)
 
 
+# 성적 데이터 수정시 수정할 데이터 입력받기
 def read_again(data, name):
+    """
+    성적 데이터 수정시 수정할 데이터 입력받는 함수
+    :param data: 기존에 저장된 성적데이터
+    :param name: 수정할 데이터의 이름
+    :return: 새롭게 생성된 성적데이터
+    """
     kor = int(input(f'새로운 국어는? ({data["kor"]}) : '))
     eng = int(input(f'새로운 영어는? ({data["eng"]}) : '))
     mat = int(input(f'새로운 수학은? ({data["mat"]}) : '))
@@ -114,12 +161,22 @@ def read_again(data, name):
     return data
 
 
+# 성적 데이터 수정/삭제시 변경사항 파일에 반영
 def flush_sungjuk():
+    """
+    성적 데이터 수정/삭제시 변경사항을 파일에 반영하는 함수
+    :return: 없음
+    """
     with open('sungjuks.json', 'w', encoding='UTF-8') as f:
         json.dump(sjs, f, ensure_ascii=False)
 
 
+# 성적 데이터 수정
 def modify_sungjuk():
+    """
+    성적 데이터 수정하는 함수
+    :return: 없음
+    """
     name = input('수정할 학생 이름은?')
     # 수정할 학생 데이터를 이름으로 찾음
     data = None
@@ -144,7 +201,12 @@ def modify_sungjuk():
         print('찾는 데이터가 없습니다!')
 
 
+# 성적 데이터 삭제
 def remove_sungjuk():
+    """
+    성적 데이터를 삭제하는 함수
+    :return: 없음
+    """
     name = input('삭제할 학생 이름은?')
 
     # 삭제할 데이터 찾음
@@ -166,6 +228,12 @@ def remove_sungjuk():
             print(f'삭제가 취소되었습니다!')
 
 
+# 성적 처리 프로그램 종료
 def exit_sungjuk():
+    """
+    성적 처리 프로그램 종료 함수
+    :param: 없음
+    :return: 없음
+    """
     print('프로그램 종료!')
     sys.exit(0)
