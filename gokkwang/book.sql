@@ -16,7 +16,7 @@ create table book
 insert into book (bkname, author, publisher, pubdate, retail, pctoff)
 values ('파이썬 기초','한빛미디어','한빛미디어','2024-01-01 00:00:000',35000,10);
 
-select bkname, bkname, author, publisher, price from book where bkno = 1;
+select bkno, bkname, author, publisher, price from book where bkno = 1;
 
 select * from book where bkno = 1;
 
