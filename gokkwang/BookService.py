@@ -66,10 +66,8 @@ class BookService:
         print('도서 데이터 추가')
         try:
             bk = BookService.__input_book()
-            print(bk)
 
             rowcnt = BookDAO.insert_book(bk)
-            print(f'{rowcnt} 건의 도서데이터 등록됨!!')
         except:
             print('BookService - new_book에서 오류 발생!!')
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -77,6 +75,8 @@ class BookService:
             print('예외 내용 :', exc_obj)
             print('예외 종류 :', exc_type.__name__)
             print('예외 위치 :', fname, exc_tb.tb_lineno)
+        finally:
+            print(f'{rowcnt} 건의 도서데이터 등록됨!!')
 
     @staticmethod
     # 모든 도서 데이터 출력
@@ -116,20 +116,29 @@ class BookService:
 
     @staticmethod
     def __reinput_book(obk):
-        bkname = input(f'도서명은? ({obk[1]}) ')
-        author = input(f'도서 저자는? ({obk[2]}) ')
-        publisher = input(f'도서 출판사는? ({obk[3]}) ')
-        pubdate = input(f'도서 출간일은? ({obk[4]}) ')
-        retail = int(input(f'도서 소매가는? ({obk[5]}) '))
-        pctoff = int(input(f'도서 할인율은? ({obk[7]}) '))
+        try:
+            bkname = input(f'도서명은? ({obk[1]}) ')
+            author = input(f'도서 저자는? ({obk[2]}) ')
+            publisher = input(f'도서 출판사는? ({obk[3]}) ')
+            pubdate = input(f'도서 출간일은? ({obk[4]}) ')
+            retail = int(input(f'도서 소매가는? ({obk[5]}) '))
+            pctoff = int(input(f'도서 할인율은? ({obk[7]}) '))
 
-        bk = Book(bkname, author, publisher, pubdate, retail, pctoff)
+            bk = Book(bkname, author, publisher, pubdate, retail, pctoff)
 
-        bk.price = bk.retail * (1 - (bk.pctoff / 100))
-        bk.mileage = bk.retail * (bk.pctoff / 100)
-        bk.bkno = obk[0]
+            bk.price = bk.retail * (1 - (bk.pctoff / 100))
+            bk.mileage = bk.retail * (bk.pctoff / 100)
+            bk.bkno = obk[0]
 
-        return bk
+            return bk
+        except:
+            print('BookService - reinput_book에서 오류 발생!!')
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print('예외 내용 :', exc_obj)
+            print('예외 종류 :', exc_type.__name__)
+            print('예외 위치 :', fname, exc_tb.tb_lineno)
+
 
     @staticmethod
     # 도서 데이터 수정
@@ -142,9 +151,18 @@ class BookService:
         row = BookDAO.selectone_book(bkname)
 
         if row:
-            bk = BookService.__reinput_book(row)
-            rowcnt = BookDAO.update_book(bk)
-            print(f'{rowcnt} 건의 도서데이터 수정됨!!')
+            try:
+                bk = BookService.__reinput_book(row)
+                rowcnt = BookDAO.update_book(bk)
+                print(f'{rowcnt} 건의 도서데이터 수정됨!!')
+            except:
+                print('BookService - modify_book에서 오류 발생!!')
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                print('예외 내용 :', exc_obj)
+                print('예외 종류 :', exc_type.__name__)
+                print('예외 위치 :', fname, exc_tb.tb_lineno)
+
         else:
             print('수정할 데이터는 없어요!!')
 
